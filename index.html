@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cupones Mercado Libre</title>
+</head>
+<body>
+  <h1>Generador de Cupones</h1>
+  <button onclick="generarCupon()">Obtener cupón</button>
+  <p id="cupon">Esperando...</p>
+
+  <script>
+  let cupones = [];
+  fetch("cupones.json")
+    .then(res => res.json())
+    .then(data => { cupones = data; });
+
+  function generarCupon() {
+    if (!cupones.length) {
+      document.getElementById("cupon").innerText = "Cargando cupones…";
+      return;
+    }
+    const c = cupones[Math.floor(Math.random() * cupones.length)];
+    document.getElementById("cupon").innerText = `${c.code} – ${c.desc} (${c.source})`;
+  }
+  </script>
+</body>
+</html>
